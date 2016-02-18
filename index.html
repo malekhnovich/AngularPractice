@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html ng-app="codeSchoolAngular">
+
+
+
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"type="text/css"href="creative.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<body ng-controller="codeSchoolAngularCtrl as store">
+
+<!--goes through each element in the array like a loop!-->
+<li class="list-group-item"ng-repeat="product in store.products">
+<section ng-init="tab=1" ng-controller="PanelController as panel">
+    <ul class="nav nav-pills">
+
+        <li ng-class="{active:panel.isSelected(1)}">
+            <a href ng-click="panel.selectTab=1">Description</a></li>
+        <li ng-class="{active:panel.isSelected(2)}">
+            <a href ng-click="panel.selectTab=2">Specifications</a></li>
+        <li ng-class="{active:panel.isSelected(3)}">
+            <a href ng-click="panel.selectTab=3">Reviews</a></li>
+    </ul>
+    <div class="panel"ng-show="panel.isSelected(1)">
+    </div>
+</section>
+    <h3>{{product.name}}
+        <!-- formats the price with a filter of currency !-->
+    <em class="pull-right">{{product.price| currency}}</em>
+    <img ng-src="{{product.images[0].thumb}}"/>
+
+    <!--will only show if the value of the expression is true !-->
+    <button ng-show="product.canPurchase">Add to Cart</button>
+</div>
+</div>
+    </h3>
+<h4>Reviews</h4>
+<form name="reviewForm"ng-controller="ReviewController as reviewCtrl"
+ng-submit="reviewCtrl.addReview(product)">
+    <blockquote>
+        <b>Stars:{{reviewCtrl.review.stars}}</b>
+        {{reviewCtrl.review.body}}
+        <cite>by: {{reviewCtrl.review.author}}</cite>
+    </blockquote>
+    <select ng-model="reviewCtrl.review.stars">
+        <option value="1">1 star</option>
+        <option value="2">2 star</option>
+        <option value="3">3 star</option>
+        <option value="4">4 star</option>
+        <option value="5">5 star</option>
+    </select>
+    <textarea ng-model="reviewCtrl.review.body"></textarea>
+    <label>by:</label>
+    <input ng-model="reviewCtrl.review.author" type="email"/>
+    <input type="submit"value="submit"/>
+</form>
+
+</li>
+</ul>
+<script type="text/javascript"src="codeSchoolAngular.js"></script>
+
+</body>
+
+</html>
